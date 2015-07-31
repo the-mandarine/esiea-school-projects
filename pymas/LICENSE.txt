@@ -1,0 +1,3 @@
+License is still to be determined.
+Probably a 2-clauses BSD license
+

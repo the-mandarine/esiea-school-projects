@@ -1,0 +1,463 @@
+%--- PREREQUIS --- %
+\usepackage{ifthen} % Options Si-Sinon pour les commandes latex
+
+%Est-ce qu'on est sur un beamer ?
+\newif\ifbeamer
+\ifthenelse{\isundefined{\beamerbutton}}{\beamerfalse}{\beamertrue}
+
+%--- GENERAL ---%
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc} % Encodage du fichier
+\usepackage[T1]{fontenc}  % Encodage des polices du document
+\usepackage[english,francais]{babel} % Langages utilisés
+\usepackage{lmodern} % Police pour rendre le texte sélectionable
+\usepackage{pifont} % For access to weird symbols
+\newcommand{\carriagereturn}{\Pisymbol{psy}{191}}
+
+%\usepackage{xstring}
+
+\ifbeamer
+\else
+\usepackage[top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry} % Marges PDF
+%\usepackage[top=2.5cm, bottom=2.5cm, left=2.5cm, right=3.5cm]{geometry} % Marges impression livre
+\fi
+\setlength{\parskip}{1ex plus .4ex minus .4ex}
+
+
+%---BEAMER --- %
+\ifbeamer
+\usetheme{Darmstadt}
+\useoutertheme[footline=institutetitle,subsection=true]{miniframes}
+\setbeamertemplate{frametitle}[default][center] %titre centré
+\addtobeamertemplate{footline}{\hfill\insertframenumber/\inserttotalframenumber\hspace{2em}\null}
+%\usecolortheme{orchid}
+%\usecolortheme{crane}
+
+%Pour la transparence des pdf
+\pdfpageattr {/Group << /S /Transparency /I true /CS /DeviceRGB>>} 
+\fi
+
+%--- STRUCTURES DONNEES ---%
+\usepackage{enumerate} % Listes
+\usepackage{array} % Tableaux
+\usepackage{tabularx} % Tableaux modulables
+\ifbeamer
+\else
+\usepackage[table]{xcolor} % Tableaux couleur
+\fi
+\usepackage{graphicx} % Figures
+\usepackage[normalsize,up,bf,center]{caption2} % Meilleur distinction des figures
+\renewcommand{\captionfont}{\bfseries \itshape}
+\renewcommand{\captionlabeldelim}{~--}
+
+% -- TABLEAUX ---- %
+\usepackage{longtable} % Tableaux sur plusieurs pages
+\usepackage{multicol} % Colonnes
+\usepackage{multirow} % Lignes
+\usepackage{rotating} % Écriture et figure verticales
+\renewcommand{\arraystretch}{1.5} % Meilleur lisibilité des tableaux.
+
+%--- MISE EN FORME & CARACTERES SPECIAUX ---%
+\usepackage{amssymb} % Symboles
+\usepackage{eurosym} % € symbol
+\usepackage[autolanguage]{numprint} % 1000 => 1 000
+\ifbeamer
+\else
+\usepackage[colorlinks=true,urlcolor=blue,pdfstartview=FitH,linkcolor=blue]{hyperref} % Liens
+\fi
+\usepackage{ulem} % Souligner, barrer, etc.
+\usepackage{relsize} % Taille relative \smaller \bigger
+\usepackage{color} % Couleur
+\definecolor{darkred}{rgb}{0.72,0.16,0.11}
+\definecolor{darkgreen}{rgb}{0.00,0.60,0.25}
+\definecolor{darkblue}{rgb}{0.00,0.00,0.70}
+\definecolor{brightblue}{rgb}{0.00,0.50,0.95}
+\definecolor{darkpurple}{rgb}{0.58,0.07,0.49}
+\definecolor{palegray}{gray}{0.80}
+\definecolor{lightgray}{gray}{0.70}
+\definecolor{pinkcomment}{rgb}{1,0,1}
+\definecolor{keywordred}{rgb}{0.65,0.17,0.23}
+\definecolor{pink}{rgb}{1,0.39,1}
+\definecolor{violet}{rgb}{0.41,0.35,0.8}
+
+\newcommand{\showcarriagereturn}{\color{green}\carriagereturn}
+\newcommand{\showspace}{\color{green}\textvisiblespace}
+
+
+%--- CODES SOURCES & CO ---%
+\usepackage{verbatim} % Texte brut
+\usepackage[french]{algorithm2e} % Algorithmes
+\newenvironment{algo}[0]{\vrule~\vrule\itshape \begin{algorithm}[H] }{\normalfont\end{algorithm}}
+\newcommand{\var}[1]{\textnormal{\texttt{#1}}}
+\RestyleAlgo{plain}
+\SetKwSwitch{Selon}{Cas}{Autre}{selon}{faire}{cas où}{autres cas}{fin}
+\SetKwRepeat{Repeter}{r\'ep\'eter}{tant que}
+\SetKwFor{uTq}{tant que}{faire}{} % Tant que sans fin (équivaut à uSi)
+\SetKwFor{oTq}{}{}{fin} % Tant que déjà ouvert, donc sans balise de départ
+\SetKwIF{oSi}{}{}{}{}{}{}{fin}
+\SetKwIF{oFn}{}{}{fonction}{}{}{}{fin}
+\SetKwFunction{KwFn}{Fn}
+
+
+
+\usepackage{listings} % Codes sources
+\usepackage{textcomp} % nécessaire pour upquote
+\lstloadlanguages{[ANSI]C, sh, Python} % Listes de langages autorisés
+
+% [style = sourceC] for the C codes
+\lstdefinestyle{sourceC}{language=C, basicstyle=\small\color{black}\ttfamily, classoffset=0, keywordstyle=\color{blue}\bfseries, classoffset=1, morekeywords={NULL}, keywordstyle=\color{magenta}\bfseries, commentstyle=\color{brightblue}\itshape, stringstyle=\color{darkgreen}, showstringspaces=false, tabsize=3, framexleftmargin=2mm, frame=shadowbox, rulesepcolor=\color{lightgray}, breaklines=true, emph={main, printf, scanf, FILE, fopen, fscanf, fprintf, fclose, rand}, emphstyle=\color{darkblue}\bfseries,columns=fullflexible, flexiblecolumns=true, upquote=true, keepspaces=true}
+% spaceflexible 
+
+ 
+% Le langage C par défaut et le ANSI. On ne précise pas [ANSI] devant car cela pose problème si utilise le style dans un tableau 
+
+% [style = python] for the python codes
+\lstdefinestyle{python}{language=python, basicstyle=\small\color{black}\ttfamily, classoffset=0, keywordstyle=\color{blue}\bfseries, classoffset=1, morekeywords={NULL}, keywordstyle=\color{magenta}\bfseries, commentstyle=\color{brightblue}\itshape, stringstyle=\color{darkgreen}, showstringspaces=false, tabsize=3, framexleftmargin=2mm, frame=shadowbox, rulesepcolor=\color{lightgray}, breaklines=true, emph={main, printf, scanf, FILE, fopen, fscanf, fprintf, fclose, rand}, emphstyle=\color{darkblue}\bfseries,columns=fullflexible, flexiblecolumns=true, upquote=true, keepspaces=true}
+
+% [style = msgTerminal] for shell codes
+\lstdefinestyle{msgTerminal}{language=sh, basicstyle=\footnotesize\color{white}\ttfamily, keywordstyle=\color{white}, commentstyle=\color{white}\itshape, stringstyle=\color{white}, showstringspaces=false, framexleftmargin=3mm, xleftmargin=3mm, frame=none, tabsize=3, backgroundcolor=\color{darkgray}, rulecolor=\color{black}, breaklines=true,columns=fullflexible,upquote=true}
+
+\lstdefinestyle{msgTerminalW}{language=sh, basicstyle=\small\color{black}\ttfamily, keywordstyle=\color{black}, commentstyle=\color{black}\itshape, stringstyle=\color{black}, showstringspaces=false, framexleftmargin=3mm, xleftmargin=3mm, frame=none, tabsize=3, backgroundcolor=\color{white}, rulecolor=\color{white}, breaklines=true,columns=fullflexible,upquote=true}
+
+% [style = bash] for bash scripts
+\lstdefinestyle{bash}{language=sh, basicstyle=\small\color{black}\ttfamily, classoffset=0, keywordstyle=\color{keywordred}\bfseries, morekeywords={mkdir, touch}, classoffset=1, morekeywords={$,$monNom,$RANDOM,$0,$1,$2,$3,$\#,$min,$max,$nomRep,$nom,$val,$elem}, keywordstyle=\color{magenta}\bfseries, commentstyle=\color{darkblue}\bfseries, stringstyle=\color{darkgreen}, showstringspaces=false, tabsize=3, framexleftmargin=2mm, frame=shadowbox, rulesepcolor=\color{lightgray}, breaklines=true, emph={main, printf, scanf, FILE, fopen, fscanf, fprintf, fclose}, emphstyle=\color{darkblue}\bfseries,columns=fullflexible,upquote=true}
+
+%keywordstyle=\color{white}, commentstyle=\color{white}\itshape, stringstyle=\color{white}, showstringspaces=false, framexleftmargin=3mm, xleftmargin=3mm, frame=none, tabsize=3, backgroundcolor=\color{black}, rulecolor=\color{black}, breaklines=true,columns=fullflexible}
+
+% [style = inlineSourceC] for C expression into text
+\lstdefinestyle{inlineSourceC}{language=C, basicstyle=\footnotesize\color{black}\ttfamily, classoffset=0, keywordstyle=\color{blue}\bfseries, classoffset=1, morekeywords={NULL}, keywordstyle=\color{magenta}\bfseries, commentstyle=\color{brightblue}\itshape, stringstyle=\color{darkgreen}, showstringspaces=false, tabsize=3, breaklines=true, emph={main, printf, scanf, FILE, fopen, fscanf, fprintf, fclose, rand}, emphstyle=\color{darkblue}\bfseries,columns=fullflexible, keepspaces=true,upquote=true}
+% Le langage C par défaut et le ANSI. On ne précise pas [ANSI] devant car cela pose problème si utilise le style dans un tableau (ne pas préciser frame=none non plus pour la même raison)
+
+% [style = inlineTerminal] for shell expression into text
+\lstdefinestyle{inlineTerminal}{language=sh, basicstyle=\footnotesize\color{black}\ttfamily\bfseries, keywordstyle=\color{black}, commentstyle=\color{black}\itshape, stringstyle=\color{black}\itshape, showstringspaces=false, tabsize=3, breaklines=true,upquote=true}
+% Ne pas préciser frame=none pour laisser la possibilité d'utiliser le style dans un tableau
+
+% [style = cadre] for printing an empty answer box (use framextopmargin=XXmm to set the height)
+\lstdefinestyle{cadre}{language=[ANSI]C, basicstyle=\small\color{red}\ttfamily, showstringspaces=false, tabsize=3, framexleftmargin=2mm, frame=single, framerule=0.2mm, rulecolor=\color{black}, breaklines=true, columns=fullflexible, showlines=true,upquote=true}
+
+% [style = sourceJava] for the Java codes
+\lstdefinestyle{sourceJava}{language=Java, basicstyle=\small\color{black}\ttfamily, classoffset=0, keywordstyle=\color{darkgreen}\bfseries, commentstyle=\color{brightblue}\itshape, stringstyle=\color{darkgreen}, showstringspaces=false, tabsize=3, framexleftmargin=2mm, frame=shadowbox, rulesepcolor=\color{lightgray}, breaklines=true, emph={main, printf, FILE, fopen, fscanf, fprintf, fclose,new,return,this,super,null,break,continue,if,else,switch,case,default,do,while,for,break,new,return}, emphstyle=\color{darkred}\bfseries,columns=fullflexible,upquote=true}
+% Le langage Java par défaut
+
+% [style = sourceJava] for the Java codes
+\lstdefinestyle{inlineSourceJava}{style=sourceJava, basicstyle=\normalsize\color{black}\ttfamily}
+% Le langage Java par défaut
+
+
+%--- CHEMINS DES DOSSIERS IMAGES---%
+\graphicspath{{../../Commons/Images/} {./img/} {../../../../Commons/Images/}{../../../../../Commons/Images/}{../../../../../../Commons/Images/}{../../../Commons/Images/}}
+
+% TODO : réintroduire une option pour se passer du paragraphe à la demande (ancienement none)
+
+%FOR EACH pour parser différent arguments séparé par une virgule
+%SPLIT pour séparer key=value
+%Source : http://stackoverflow.com/questions/2402354/split-comma-separated-parameters-in-latex
+%Plus bidouille A. Gademer (pour en déduire split)
+
+\makeatletter
+
+% Functional foreach construct 
+% #1 - Function to call on each comma-separated item in #3
+% #2 - Parameter to pass to function in #1 as first parameter
+% #3 - Comma-separated list of items to pass as second parameter to function #1
+\def\foreach#1#2#3{%
+  \@test@foreach{#1}{#2}#3,\@end@token%
+}
+
+% Internal helper function - Eats one input
+\def\@swallow#1{}
+
+% Internal helper function - Checks the next character after #1 and #2 and 
+% continues loop iteration if \@end@token is not found 
+\def\@test@foreach#1#2{%
+  \@ifnextchar\@end@token%
+    {\@swallow}%
+    {\@foreach{#1}{#2}}%
+}
+
+% Internal helper function - Calls #1{#2}{#3} and recurses
+% The magic of splitting the third parameter occurs in the pattern matching of the \def
+\def\@foreach#1#2#3,#4\@end@token{%
+  #1{#2}{#3}%
+  \@test@foreach{#1}{#2}#4\@end@token%
+}
+
+% Example-function used in foreach, which takes two params and builds hrefs
+%\def\makehref#1#2{\href{#1/#2}{#2}}
+
+% Using foreach by passing #1=function, #2=constant parameter, #3=comma-separated list
+%\foreach{\makehref}{http://stackoverflow.com}{2409851,2408268}
+
+% Will in effect do
+%\href{http://stackoverflow.com/2409851}{2409851}\href{http://stackoverflow.com/2408268}{2408268}
+
+
+
+% Functional Split construct 
+% #1 - Function to call on each key=value items in #2
+% #2 - key=value items to pass as parameter to function #1
+\def\split#1#2{%
+  \@test@split{#1}#2\@end@token%
+}
+
+% Internal helper function - Checks the next character after #1 and 
+% continues loop iteration if \@end@token is not found 
+\def\@test@split#1{%
+  \@ifnextchar\@end@token%
+    {\@swallow}%
+    {\@split{#1}}%
+}
+
+
+
+% Internal helper function - Calls #1{#2}{#3}
+% The magic of splitting the second parameter occurs in the pattern matching of the \def
+\def\@split#1#2=#3\@end@token{%
+  #1{#2}{#3}
+}
+
+\makeatother
+
+% Example-function used in split, which takes two params
+%\def\showbiz#1#2{Je vois #1 et #2.}
+
+% Using foreach by passing #1=function, #2= key=value items
+%\foreach{\showbiz}{key=value}
+
+% Will in effect do
+%Je vois key et value
+
+
+% FIN FOR EACH et SPLIT
+
+
+
+
+% PUPUCES !!!!! %
+
+\newcommand{\pupuceC}[4]{\begin{center}\includegraphics[width=0.9cm]{#1} \color{#2}\\\textbf{#3}~\\\ifthenelse{\equal{#1}{quote}}{\itshape \og~#4~\fg}{#4}\end{center}}
+\newcommand{\pupuceCN}[3]{\begin{center}\includegraphics[width=0.9cm]{#1} \color{#2}\\\textbf{#3}\vspace{-0.5cm}\end{center}}
+ \newcommand{\pupuceLN}[4]{\includegraphics[height=0.6cm]{#1} \begin{minipage}{0.9\textwidth}  \color{#2}\textbf{#3}\end{minipage}}
+ \newcommand{\pupuceL}[4]{\includegraphics[height=0.6cm]{#1} \begin{minipage}{0.9\textwidth}  \color{#2}\textbf{#3}~\ifthenelse{\equal{#1}{quote}}{\itshape \og~#4~\fg}{#4}\end{minipage}}
+\newcommand{\pupuce}[5]{\ifthenelse{\equal{#1}{C}}{\pupuceC{#2}{#3}{#4}{#5}}{\ifthenelse{\equal{#1}{L}}{\pupuceL{#2}{#3}{#4}{#5}}{\ifthenelse{\equal{#1}{CN}}{\pupuceCN{#2}{#3}{#4}}{\ifthenelse{\equal{#1}{LN}}{\pupuceLN{#2}{#3}{#4}}{}}}}}
+
+%--- DEFINITION DES ANNOTATIONS ---%
+
+\newcommand{\error}[3][C]{\pupuce{#1}{error}{darkred}{#2}{#3}} % appel \error{TITRE}{TEXTE}
+
+\newcommand{\warning}[3][C]{\pupuce{#1}{warning}{darkred}{#2}{#3}} % appel \warning{TITRE}{TEXTE}
+
+\newcommand{\help}[3][C]{\pupuce{#1}{help}{brightblue}{#2}{#3}} % appel \help{TITRE}{TEXTE}
+
+\newcommand{\info}[3][C]{\pupuce{#1}{information}{brightblue}{#2}{#3}} % appel \info{TITRE}{TEXTE}
+
+\newcommand{\save}[3][C]{\pupuce{#1}{save}{darkgreen}{#2}{#3}} % appel \save{TITRE}{TEXTE}
+
+\newcommand{\tips}[3][C]{\pupuce{#1}{tick}{darkgreen}{#2}{#3}} % appel \tips{TITRE}{TEXTE}
+
+\newcommand{\ubuntu}[3][C]{\pupuce{#1}{UbuntuCoF}{orange}{#2}{#3}} % appel \ubuntu{TITRE}{TEXTE}
+
+\newcommand{\quoted}[3][C]{\pupuce{#1}{quote}{darkpurple}{#2}{#3}} % appel \ubuntu{TITRE}{TEXTE}
+
+\newcommand{\panicadvise}[3][C]{\pupuce{#1}{dont_panic}{brightblue}{#2}{#3}}
+
+%\quoted{TITRE}{TEXTE}
+
+\newcommand{\eureka}[0]{\includegraphics[height=36pt]{eureka}}
+\newcommand{\dontpanic}[0]{\includegraphics[height=24pt]{dont_panic}}
+\newcommand{\emosmile}[0]{\includegraphics[height=12pt]{emosmile}}
+
+
+
+
+% CITATION DES SOURCES DES IMAGES
+\newcommand{\bysa}[1]{\scriptsize{#1~\includegraphics[height=12pt]{cc_cc_30}\includegraphics[height=12pt]{cc_by_30}\includegraphics[height=12pt]{cc_sa_30}}}
+\newcommand{\source}[1]{\begin{footnotesize} Source~:~#1 \end{footnotesize}}
+\newcommand{\vsource}[1]{\begin{footnotesize} \color{gray} ~\begin{sideways}  \mbox{#1}\end{sideways} \end{footnotesize} }
+\newcommand{\wikimedia}[1]{Wikimédia/#1}
+
+
+%\begin{tableOfCommands}{nbcol}{disposition}{header}{légende}
+% données du tableau
+%\end{tableOfCommands}
+\newenvironment{tableOfCommands}[4]{\begin{longtable}{#2}
+\caption{#4}\tabularnewline
+\hline   #3 \tabularnewline
+\hline
+\hline
+\endfirsthead
+\hline  #3  \tabularnewline
+\hline
+\hline 
+\endhead
+\multicolumn{#1}{c}{ (Suite page suivante)}\\
+\endfoot
+\hline
+\endlastfoot}{\end{longtable}\medskip}
+
+\newenvironment{tableOfCommandsNoCapt}[3]{\begin{longtable}{#2}
+\hline   #3 \tabularnewline
+\hline
+\hline
+\endfirsthead
+\hline  #3  \tabularnewline
+\hline
+\hline 
+\endhead
+\multicolumn{#1}{c}{ (Suite page suivante)} \tabularnewline
+\hline 
+\endfoot
+\hline
+\endlastfoot}{\end{longtable}\medskip}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% Affichage de la division euclidienne et méthode de Horner !
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+\makeatletter
+\newbox\nb@box
+\newcount\nb@a
+\newcount\nb@b
+\newcount\iter@
+\newcommand\division[2][2]{%
+   \def\dividende@{#2}\def\base@{#1}\iter@\@ne\division@{#2}{#1}}
+\newcommand\division@[2]{%
+   \setbox\nb@box\hbox{\kern0.5em#1\kern0.5em}%
+   \nb@a#1 \nb@b#1 \divide\nb@b#2
+   \vtop{%
+      \begingroup
+         \multiply\nb@b#2 \advance\nb@a-\nb@b
+         \hbox to\wd\nb@box{\hfil#1\hfil}%
+         \vskip3pt\hrule height0pt width\wd\nb@box\vskip3.4pt
+         \hbox to\wd\nb@box{\hfil\textbf{\color{red}\number\nb@a}\kern0.5em}%
+         \expandafter\xdef\csname reste@\number\iter@\endcsname{\number\nb@a}%
+      \endgroup}%
+   \setbox\nb@box\hbox{8}\vrule height\ht\nb@box depth3.5ex
+   \setbox\nb@box\hbox{\kern0.5em\ifnum#2>\nb@b #2\else\number\nb@b\fi\kern0.5em}%
+   \vtop{%
+      \hbox to\wd\nb@box{\kern0.5em#2\hfil}%
+      \vskip3pt\hrule height0.4pt width\wd\nb@box\vskip3pt
+      \hbox{%
+         \csname @\ifnum\nb@b>\z@ first\else second\fi oftwo\endcsname
+         {\advance\iter@\@ne\gdef\maxiter{\number\iter@}%
+          \expandafter\division@\expandafter{\number\nb@b}{#2}}%
+         {\kern0.5em\number\nb@b\xdef\maxiter{\number\iter@}}}}}
+
+\newcommand\afficheresultat{$(\dividende@)_{10}=(\afficheresultat@\maxiter)_{\base@}$}
+\newcommand\afficheresultat@[1]{%
+   \csname reste@#1\endcsname
+   \ifnum#1>\@ne
+      \expandafter\expandafter\expandafter\afficheresultat@
+   \else
+      \expandafter\@gobble
+   \fi{\number\numexpr#1-1}}
+\makeatother
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% Fin Affichage de la division euclidienne et méthode de Horner !
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+
+% Balises pour les questions & les exercices %
+%\theoremstyle{definitionTP}
+\usepackage[nocut]{thmbox}
+\thmboxoptions{bodystyle=\noindent}
+\newtheorem[L]{questionTheo}{\textbf{QUESTION}}
+\newtheorem[L]{exerciceTheo}{\textbf{EXERCICE}}
+\newtheorem[L]{correctionTheo}{\textbf{CORRECTION}}
+
+
+\newenvironment{definitionTP}[1]{
+\begin{tabular}{|m{1.3cm}m{0.8\textwidth}|}
+\hline
+\vspace{0.2cm}\includegraphics[width=1.3cm]{definition}&
+\bfseries\underline{#1}~:}{
+\tabularnewline
+\hline
+\end{tabular}
+}
+
+
+
+
+% L'environnement question est une encapsulation du théroème questionTheo
+% On l'appelle de manière simple par \begin{question} ... \end{question}
+% Si l'on veut marquer un type de question (Bonus, Défis), on peut écrire :
+% \begin{question}[name=Défis} ... \end{question]
+% ATTENTION, none est obligatoire si on a le paramètre optionnel
+% Si l'on veut décrire le type de question, on peut écrire :
+% \begin{question}[name=Défis,footnote=blah blah} ... \end{question]
+% blah blah apparaitra en note de bas de page. :-)
+%
+% Attention à bien mettre la deuxième paire d'accollades (même vide) !
+% Sinon vous perdez la première lettre de votre phrase
+%
+\makeatletter
+
+%\newcommand{\setThmCut}[1][false]{\ifthenelse{\equal{#1}{false}}{\thmbox@cutfalse}{\thmbox@cuttrue}}
+
+\newcommand{\parseExoArgs}[2]{
+%Je vois #1 et #2.
+\ifthenelse{\equal{#1}{cut}}{\ifthenelse{\equal{#2}{true}}{\thmbox@cuttrue}{}}{}% Découpage autorisé ?
+\ifthenelse{\equal{#1}{name}}{\def\@name{#2}}{}%
+\ifthenelse{\equal{#1}{label}}{\def\@label{#2}}{}%
+\ifthenelse{\equal{#1}{footnote}}{%
+\def\@footnote{\footnotemark}
+\def\@footnoteTxt{#2}
+}{}% Découpage autorisé ?
+}
+
+\newenvironment{exoreponse}[3]{
+%A mettre au début de l'environnement.
+\medskip%
+\def\@name{none}%
+\def\@footnote{}%
+\def\@footnoteTxt{none}%
+\def\@label{none}
+\def\@theo{#2}%
+\foreach{\split}{\parseExoArgs}{#1}% Parsing des options
+\ifthenelse{\equal{\@name}{none}}{% Pas de noms (entre parenthèse)
+\begin{\@theo}% 
+}{%sinon
+\begin{\@theo}[\@name\@footnote]%
+}%
+\ifthenelse{\not\equal{\@label}{none}}{%
+\label{\@label}%
+}{}%
+\ifthenelse{\not\equal{#3}{none}}{% 
+\includegraphics[height=20pt]{#3}%On affiche l'image associée
+}{}%
+}{% A mettre à la fin (attention, pas accès à #1 ni #2)
+\end{\@theo}%
+\ifthenelse{\not\equal{\@footnoteTxt}{none}}{\footnotetext{\@footnoteTxt}}{}%
+}% Fin definition newenvirronment
+\makeatother
+
+\newenvironment{exercice}[1][]{
+\begin{exoreponse}{#1}{exerciceTheo}{doit}%
+}{%
+\end{exoreponse}%
+}% Fin definition newenvirronment
+
+\newenvironment{question}[1][]{
+\begin{exoreponse}{#1}{questionTheo}{question}%
+}{%
+\end{exoreponse}%
+}% Fin definition newenvirronment
+
+\newenvironment{correctionExo}[1][]{
+\begin{exoreponse}{#1}{correctionTheo}{none}%
+\color{red}\bfseries%
+}{%
+\end{exoreponse}%
+}% Fin definition newenvirronment
+
+
+%--- OBJECTIF TP EN AVANT PROPOS ---%
+\newcommand{\abstractTP}[1]{\section*{Avant propos} \textit{#1}} % appel \abstractTP{TEXTE}
+
+\newcommand{\difficulty}[1]{~\includegraphics[height=24pt]{difficult_#1}\protect\footnote{La difficulté estimé concerne le niveau et le temps de \underline{réflexion} nécessaire, pas la complexité algorithmique ou de programmation, qui sont à votre portée.}}
+
+
+
