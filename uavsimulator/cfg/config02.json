@@ -1,0 +1,8 @@
+{
+    "agentXConcentration": 0.6, 
+    "agressivity": 42, 
+    "nbMutations": 5, 
+    "nbParentsInitial": 200, 
+    "nbParentsPerGeneration": 10
+}
+

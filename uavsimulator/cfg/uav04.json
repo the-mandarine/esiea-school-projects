@@ -1,0 +1,10 @@
+{
+		"pt":[[-1.0, 1],[-0.5, 0.0],[-0.5, -3],[0.0, -5],[0.5, -3],[0.5, 0.0],[1, 1]],
+		"density":2.0,
+		"leftThruster":[0.5, 1],
+		"rightThruster":[-0.5, 1],
+		"maxThrust":100.0,
+		"OrientationNoise":0, 
+		"DistanceMeterNoise":0, 
+		"AccelerationNoise":0 
+}
